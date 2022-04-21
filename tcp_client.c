@@ -13,6 +13,7 @@ int main(int argc, char const *argv[])
     int sock;
     struct sockaddr_in server;
 
+    // parse arguments
     if (argc != 3) {
         perror("wrong number of arguments\n");
         perror("try: ./<f_name> <host> <port>\n");
@@ -21,16 +22,17 @@ int main(int argc, char const *argv[])
     const char* host = argv[1];
     const int port = atoi(argv[2]);
 
+    // configure server (self) address
+    server.sin_family = AF_INET;
+    server.sin_port = htons(port);
+    server.sin_addr.s_addr = inet_addr(host);
+    memset(server.sin_zero, '\0', sizeof server.sin_zero);
+
+    // ------------------------------------
+
     sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock == -1) {
         perror("Could not initiate socket");
-        exit(1);
-    }
-
-    server.sin_family = AF_INET;
-    server.sin_port = htons(port);
-    if (inet_pton(AF_INET, host, &server.sin_addr) == -1) {
-        perror("Invalid address");
         exit(1);
     }
 

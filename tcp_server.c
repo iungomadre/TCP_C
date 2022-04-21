@@ -45,7 +45,6 @@ int main(int argc, char const *argv[])
         printf("Could not bind address %s\n", host);
         exit(1);
     }
-    struct in_addr inp;
     printf("Socket succesfully binded at %s:%d\n",
            inet_ntoa(server.sin_addr),
            ntohs(server.sin_port));
@@ -65,7 +64,7 @@ int main(int argc, char const *argv[])
         }
         printf("Connected\n");
 
-        do {
+        do { // read data
             memset(buf, 0, sizeof buf);
             if ((chNum = read(inSock, buf, BUF_SIZE)) == -1) {
                 perror("Could not read data\n");
