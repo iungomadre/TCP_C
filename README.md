@@ -12,6 +12,6 @@ Client - sends static message to address passed
 
 ```gcc tcp_client.c -o client```
 
-```./server 8000``` 
+```./server 127.0.0.1 8000``` 
 
 ```./client 127.0.0.1 8000```
